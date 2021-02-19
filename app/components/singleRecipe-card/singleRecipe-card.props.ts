@@ -13,4 +13,6 @@ export interface SingleRecipeCardProps {
   description: string
 
   time: number
+
+  reminders: Array<string>
 }

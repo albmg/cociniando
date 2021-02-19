@@ -1,3 +1,4 @@
+import { NavigationContainer } from "@react-navigation/native"
 import React from "react"
 import { ViewStyle, FlatList, Text, TextStyle } from "react-native"
 import { Header, Screen } from "../../components"
@@ -36,7 +37,7 @@ const TEXTSTYLE: TextStyle = {
   fontSize: fontSize.large,
 }
 
-export const RecipesScreen = function RecipesScreen() {
+export const RecipesScreen = function RecipesScreen({ navigation }) {
   // const { isLoading, isError, data, error } = useQuery('recipes', getLastRecipes)
 
   // if (isLoading) {
@@ -53,38 +54,44 @@ export const RecipesScreen = function RecipesScreen() {
     {
       title: "macarrones",
       url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg",
-      time: 20
+      time: 20,
+      id: 1
     },
     {
       title: "ensalada",
       url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg",
-      time: 10
+      time: 10,
+      id: 2
     },
     {
       title: "queque",
       url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAE_HaWhtpD9luX5ngy8z_5Pbg1GjLNXfQ9w&usqp=CAU",
-      time: 60
+      time: 60,
+      id: 3
     },
     {
       title: "macarrones",
       url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg",
-      time: 20
+      time: 20,
+      id: 4
     },
     {
       title: "ensalada",
       url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg",
-      time: 10
+      time: 10,
+      id: 5
     },
     {
       title: "queque",
       url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAE_HaWhtpD9luX5ngy8z_5Pbg1GjLNXfQ9w&usqp=CAU",
-      time: 60
+      time: 60,
+      id: 6
     }
   ]
 
   function renderItem ({ item, index }) {
     const cardStyle = index % 3 === 2 ? CARD_STYLE_THIRD : CARD_STYLE
-    return <RecipeCard style={cardStyle} url={item.url} title={item.title} time={item.time} onPress={() => console.log('hola')}></RecipeCard>
+    return <RecipeCard style={cardStyle} id={item.id} url={item.url} title={item.title} time={item.time} onPress={() => console.log('Hola', item.id) }></RecipeCard>
   }
 
   return (

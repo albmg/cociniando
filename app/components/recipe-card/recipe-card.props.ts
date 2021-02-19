@@ -12,5 +12,7 @@ export interface RecipeCardProps {
 
   time: number
 
+  id: number
+
   onPress: (event: GestureResponderEvent) => void
 }
