@@ -6,7 +6,7 @@
  */
 import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
-import { WelcomeScreen, DemoScreen } from "../screens"
+import { WelcomeScreen, DemoScreen, } from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

@@ -38,7 +38,7 @@ const TOUCHABLE: ViewStyle = {
 /**
  * Describe your component here
  */
-export const RecipeCard = observer(function CountryCard(props: RecipeCardProps) {
+export const RecipeCard = observer(function RecipeCard(props: RecipeCardProps) {
   const { style, url, title, time, onPress } = props
 
   return (
