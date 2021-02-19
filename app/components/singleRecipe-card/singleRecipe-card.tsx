@@ -1,7 +1,7 @@
 import * as React from "react"
 import { View, ViewStyle, Text, ImageBackground, ImageStyle, TextStyle } from "react-native"
 import { observer } from "mobx-react-lite"
-import { color, fontSize, spacing, typography } from "../../theme"
+import { color, fontSize } from "../../theme"
 import { SingleRecipeCardProps } from "./singleRecipe-card.props"
 
 const CONTAINER: ViewStyle = {

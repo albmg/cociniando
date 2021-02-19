@@ -1,9 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native"
 import React from "react"
 import { ViewStyle, FlatList, Text, TextStyle } from "react-native"
 import { Header, Screen } from "../../components"
 import { RecipeCard } from "../../components/recipe-card/recipe-card"
-import { color, typography, fontSize } from "../../theme"
+import { typography, fontSize } from "../../theme"
 
 // import { useQuery } from 'react-query'
 
@@ -91,7 +90,14 @@ export const RecipesScreen = function RecipesScreen({ navigation }) {
 
   function renderItem ({ item, index }) {
     const cardStyle = index % 3 === 2 ? CARD_STYLE_THIRD : CARD_STYLE
-    return <RecipeCard style={cardStyle} id={item.id} url={item.url} title={item.title} time={item.time} onPress={() => console.log('Hola', item.id) }></RecipeCard>
+    return <RecipeCard
+            style={cardStyle}
+            id={item.id}
+            url={item.url}
+            title={item.title}
+            time={item.time}
+            onPress={() => navigation.navigate('SingleRecipe', { recipeId: item.id }) }>
+            </RecipeCard>
   }
 
   return (

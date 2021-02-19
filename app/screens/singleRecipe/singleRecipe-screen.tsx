@@ -1,6 +1,6 @@
 import React from "react"
 import { ViewStyle } from "react-native"
-import { Header, Screen, Text } from "../../components"
+import { Screen } from "../../components"
 import { SingleRecipeCard } from "../../components/singleRecipe-card/singleRecipe-card"
 
 const ROOT: ViewStyle = {
