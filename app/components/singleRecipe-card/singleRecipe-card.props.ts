@@ -1,4 +1,4 @@
-import { GestureResponderEvent, ViewStyle } from "react-native"
+import { ViewStyle } from "react-native"
 
 export interface SingleRecipeCardProps {
  /**
@@ -13,6 +13,4 @@ export interface SingleRecipeCardProps {
   description: string
 
   time: number
-
-  onPress: (event: GestureResponderEvent) => void
 }
