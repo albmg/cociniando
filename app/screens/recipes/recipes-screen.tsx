@@ -83,7 +83,6 @@ export const RecipesScreen = function RecipesScreen() {
   ]
 
   function renderItem ({ item, index }) {
-    // console.log(index)
     const cardStyle = index % 3 === 2 ? CARD_STYLE_THIRD : CARD_STYLE
     return <RecipeCard style={cardStyle} url={item.url} title={item.title} time={item.time} onPress={() => console.log('hola')}></RecipeCard>
   }
