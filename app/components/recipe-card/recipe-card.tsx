@@ -11,7 +11,7 @@ const CONTAINER: ViewStyle = {
 
 const TOPTEXT: TextStyle = {
   fontFamily: typography.primary,
-  fontSize: fontSize.large,
+  fontSize: fontSize.medium,
   color: color.text,
   top: 25,
   marginHorizontal: 20,
@@ -26,7 +26,6 @@ const BOTTOMTEXT: TextStyle = {
 }
 const FULLSIZE: ImageStyle = {
   borderRadius: 5,
-  // width: "125%",
   height: 150,
   overflow: 'hidden'
 }
@@ -43,12 +42,13 @@ export const RecipeCard = observer(function RecipeCard(props: RecipeCardProps) {
 
   return (
     <View style={[CONTAINER, style]}>
-      <TouchableOpacity style={TOUCHABLE} onPress={onPress}><ImageBackground style={FULLSIZE} source={{ uri: url }}>
-        <View>
-          <Text style={TOPTEXT}>{title}</Text>
-          <Text style={BOTTOMTEXT}>{time} days</Text>
-        </View>
-      </ImageBackground>
+      <TouchableOpacity style={TOUCHABLE} onPress={onPress}>
+        <ImageBackground style={FULLSIZE} source={{ uri: url }}>
+          <View>
+            <Text style={TOPTEXT}>{title}</Text>
+            <Text style={BOTTOMTEXT}>{time} minutos </Text>
+          </View>
+        </ImageBackground>
       </TouchableOpacity>
     </View>
   )
