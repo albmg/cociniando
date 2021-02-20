@@ -6,6 +6,7 @@ import { SwiperComponent } from "../../components/swiper/swiper"
 import Swiper from 'react-native-swiper'
 import { color, fontSize } from "../../theme"
 import { ShowTimeCard } from "../../components/showTime-card/showTime-card"
+import { TextField } from "../../components/text-field/text-field"
 
 const ROOT: ViewStyle = {
   flex: 1,

@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { RecipesScreen } from "../screens/recipes/recipes-screen"
 import { SingleRecipeScreen } from "../screens/singleRecipe/singleRecipe-screen"
+import { CreateRecipeScreen } from "../screens/createRecipe/createRecipe-screen"
 
 // import Ionicons from '@expo/vector-icons/Ionicons'
 import { State } from 'react-native-gesture-handler'
@@ -17,6 +18,7 @@ console.log(State)
 
 export const StackNavigator = () => (
   <Stack.Navigator>
+    <Stack.Screen name="Recipes" component={RecipesScreen} />
     <Stack.Screen name="SingleRecipe" component={SingleRecipeScreen} />
   </Stack.Navigator>
 )
@@ -24,8 +26,8 @@ export const StackNavigator = () => (
 export const TabNavigator = () => (
   <NavigationContainer>
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={RecipesScreen} />
-      <Tab.Screen name="SingleRecipe" component={StackNavigator} />
+      <Tab.Screen name="Home" component={StackNavigator} />
+      <Tab.Screen name="Crear" component={CreateRecipeScreen} />
     </Tab.Navigator>
   </NavigationContainer>
 )
