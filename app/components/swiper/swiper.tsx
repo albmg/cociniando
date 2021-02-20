@@ -19,7 +19,7 @@ const VIEWTEXT: ViewStyle = {
 }
 
 const TEXTSLIDE: TextStyle = {
-  fontSize: fontSize.large,
+  fontSize: fontSize.medium,
   fontWeight: 'bold',
   color: color.palette.white,
   // backgroundColor: "black",
@@ -34,7 +34,7 @@ const IMAGE: ImageStyle = {
 }
 
 export const SwiperComponent = observer(function SwiperComponent(props: SwiperProps) {
-  const { url, name, style, index } = props
+  const { url, name } = props
 
   return (
         <View style={SLIDE}>

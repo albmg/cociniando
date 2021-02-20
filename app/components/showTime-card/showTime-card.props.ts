@@ -1,10 +1,11 @@
 import { ViewStyle } from "react-native"
 
-export interface SingleRecipeCardProps {
+export interface ShowTimeCardProps {
  /**
    * An optional style override useful for padding & margin.
    */
   style?: ViewStyle;
 
-  content: string
+  time: number
+  diners: number
 }

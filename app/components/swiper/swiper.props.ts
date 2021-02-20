@@ -10,7 +10,6 @@ export interface SwiperProps {
   name: string
   // eslint-disable-next-line @typescript-eslint/ban-types
   url: string
-  index: number
 
   // onPress: (event: GestureResponderEvent) => void
 }
