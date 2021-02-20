@@ -8,29 +8,6 @@ const CONTAINER: ViewStyle = {
   justifyContent: "center",
 }
 
-const IMAGESTYLE: ImageStyle = {
-  width: "100%",
-  height: "70%"
-}
-
-const TITLESLIDE: ViewStyle = {
-  flex: 1,
-  justifyContent: 'center'
-}
-
-const TITLETEXT: TextStyle = {
-  fontSize: fontSize.large,
-  color: color.palette.white,
-  marginLeft: 15,
-  bottom: 15
-}
-
-const DESCRIPTIONTEXT: ViewStyle = {
-  flex: 1,
-  alignItems: 'flex-start',
-  justifyContent: 'center'
-}
-
 const TEXTDESCRIPTION: TextStyle = {
   marginLeft: 15,
   marginRight: 15
@@ -47,24 +24,17 @@ export const SingleRecipeCard = observer(function SingleRecipeCard(props: Single
 
   return (
     <View style={[CONTAINER, style]}>
-     <ImageBackground style={IMAGESTYLE} source={{ uri: url }}>
-       <View style={TITLESLIDE}>
-         <Text style={TITLETEXT}>{title}</Text>
-         </View>
-     </ImageBackground>
-     <View style={DESCRIPTIONTEXT}>
         <View style={REMINDERS}>
           <Text style={TEXTDESCRIPTION}>Ingredientes: </Text>
           <Text style={TEXTDESCRIPTION}>{reminders}</Text>
         </View>
         <View style={REMINDERS}>
-          <Text style={TEXTDESCRIPTION}>Tiempo: {time}</Text>
+          <Text style={TEXTDESCRIPTION}>Tiempo: {time} min.</Text>
         </View>
         <View>
           <Text style={TEXTDESCRIPTION}>Elaboración: </Text>
           <Text style={TEXTDESCRIPTION}>{description}</Text>
         </View>
-     </View>
     </View>
   )
 })
