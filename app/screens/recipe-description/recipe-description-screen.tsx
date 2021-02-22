@@ -61,10 +61,14 @@ const ACTIVEDOT = {
   marginRight: 7
 }
 
-const INPUTSTYLE: ViewStyle = {
+const TEXTINPUTSTYLE: TextStyle = {
   // borderWidth: 1,
   borderColor: color.palette.lighterGrey,
   padding: 15
+}
+
+const INPUTSTYLE: ViewStyle = {
+  borderRadius: 5
 }
 
 // const CHECKBOXVIEW: ViewStyle = {
@@ -98,10 +102,10 @@ export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ naviga
           <Pressable onPress={() => navigation.navigate('TakePhoto')}><Text style={BACKGROUND}>Acceder a la cámara</Text></Pressable>
           <Pressable onPress={() => navigation.navigate('PickPhoto')}><Text style={BACKGROUND}>Acceder al teléfono</Text></Pressable>
         </View>
-        <View>
-            <TextField style={INPUTSTYLE} placeholder="Añade un nombre para tu receta" onChangeText={(text) => setRecipeName(text)} />
-            <TextField style={INPUTSTYLE} placeholder="Añade tiempo de elaboración" onChangeText={(text) => setTime(text)} />
-            <TextField style={INPUTSTYLE} placeholder="Añade nº porciones" onChangeText={(text) => setDiners(text)}/>
+        <View style={INPUTSTYLE}>
+            <TextField style={TEXTINPUTSTYLE} placeholder="Añade un nombre para tu receta" onChangeText={(text) => setRecipeName(text)} />
+            <TextField style={TEXTINPUTSTYLE} placeholder="Añade tiempo de elaboración" onChangeText={(text) => setTime(text)} />
+            <TextField style={TEXTINPUTSTYLE} placeholder="Añade nº porciones" onChangeText={(text) => setDiners(text)}/>
         </View>
         {/* <View style={CHECKBOXVIEW}>
           <Text style={CHECKBOXTITLE}>Selecciona una categoría:</Text>
