@@ -25,6 +25,8 @@ import {
   QueryClientProvider,
 } from 'react-query'
 
+import StoreProvider from "./context/SwiperImageContext"
+
 // This puts screens in a native ViewController or Activity. If you want fully native
 // stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
 // https://github.com/kmagiera/react-native-screens#using-native-stack-navigator
@@ -56,7 +58,9 @@ function App() {
     <ToggleStorybook>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <QueryClientProvider client={queryClient}>
-          <TabNavigator />
+          <StoreProvider>
+            <TabNavigator />
+          </StoreProvider>
         </QueryClientProvider>
         </SafeAreaProvider>
     </ToggleStorybook>

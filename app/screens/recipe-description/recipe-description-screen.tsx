@@ -1,14 +1,14 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { ViewStyle, Pressable, View, TextStyle } from "react-native"
 import { Text } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
-import { color, fontSize } from "../../theme"
+import { color } from "../../theme"
 import { SwiperComponent } from "../../components/swiper/swiper"
 import Swiper from 'react-native-swiper'
 import { TextField } from "../../components/text-field/text-field"
 import { ScrollView } from "react-native-gesture-handler"
-import { useSwiper } from "../../hooks/use-swiper"
+import { SwiperImageContext } from "../../context/SwiperImageContext"
 
 const ROOT: ViewStyle = {
   // backgroundColor: color.palette.black,
@@ -67,20 +67,31 @@ const INPUTSTYLE: ViewStyle = {
   padding: 15
 }
 
-export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ navigation }) {
-  const [recipeName, setRecipeName] = useState('null')
-  const [time, setTime] = useState('null')
-  const [diners, setDiners] = useState('null')
+// const CHECKBOXVIEW: ViewStyle = {
+//   marginTop: 5,
+//   alignItems: 'center'
+// }
+// const CHECKBOXTITLE: TextStyle = {
+//   color: color.palette.black
+// }
 
-  const { swiperImages } = useSwiper()
+export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ navigation }) {
+  const [recipeName, setRecipeName] = useState('')
+  const [time, setTime] = useState('')
+  const [diners, setDiners] = useState('')
+  const { swiper: { swiperImages } } = useContext(SwiperImageContext)
+
+  console.log(recipeName)
+  console.log(time)
+  console.log(diners)
+
   console.log('soy swiper en description', swiperImages)
 
-  // const swiperImages = [{ name: "hola", url: "file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FMyApp-f591c2c7-5f73-4998-a39b-2183e3967778/ImagePicker/a375bc49-893a-4998-a1a8-7de0161fc635.jpg" }, { name: "hola", url: "file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FMyApp-f591c2c7-5f73-4998-a39b-2183e3967778/ImagePicker/a375bc49-893a-4998-a1a8-7de0161fc635.jpg" }]
   return (
     <View style={ROOT}>
       <ScrollView>
       {swiperImages.length > 0 && <Swiper showsButtons={false} paginationStyle={DOTS} dot={<View style={DOT} />} activeDot={<View style={ACTIVEDOT} />} height={275}>
-            {swiperImages.map((recipe, index) => <SwiperComponent key={index} url={recipe.url} name={recipe.name} />)}
+            {swiperImages.map((recipe, index) => <SwiperComponent key={index} url={recipe} name={recipe.name} />)}
         </Swiper>}
       {swiperImages.length > 0 ? <Text style={TITLETEXT}>Añadir otra foto</Text> : <Text style={TITLETEXT}>Añadir foto de la receta</Text>}
         <View style={BUTTONCONTAINER}>
@@ -92,6 +103,10 @@ export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ naviga
             <TextField style={INPUTSTYLE} placeholder="Añade tiempo de elaboración" onChangeText={(text) => setTime(text)} />
             <TextField style={INPUTSTYLE} placeholder="Añade nº porciones" onChangeText={(text) => setDiners(text)}/>
         </View>
+        {/* <View style={CHECKBOXVIEW}>
+          <Text style={CHECKBOXTITLE}>Selecciona una categoría:</Text>
+          <Checkbox text={hola} numberOfLines={5}/>
+        </View> */}
       </ScrollView>
     </View>
   )

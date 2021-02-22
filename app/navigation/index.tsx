@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import { RecipesScreen } from "../screens/recipes/recipes-screen"
 import { SingleRecipeScreen } from "../screens/singleRecipe/singleRecipe-screen"
-import { recipeIngredientsScreen } from "../screens/recipe-ingredientes/recipe-ingredients-screen"
+import { RecipeIngredientsScreen } from "../screens/recipe-ingredientes/recipe-ingredients-screen"
 import { RecipeDescriptionScreen } from "../screens/recipe-description/recipe-description-screen"
 import { TakePhotoScreen } from "../screens/take-photo/take-photo-screen"
 import { ImagePickerScreen } from "../screens/image-picker/image-picker-screen"
@@ -34,7 +34,7 @@ export const StackNavigator = () => (
 export const TopTabNavigator = () => (
   <TopTab.Navigator>
     <Tab.Screen name="Descripción" component={RecipeDescriptionScreen} />
-    <Tab.Screen name="Ingredientes" component={recipeIngredientsScreen} />
+    <Tab.Screen name="Ingredientes" component={RecipeIngredientsScreen} />
     <Tab.Screen name="Elaboración" component={RecipeInstructionsScreen} />
   </TopTab.Navigator>
 )

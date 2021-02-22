@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { ViewStyle, Text, View, TextStyle, ImageStyle, ImageBackground } from "react-native"
 import { Camera } from 'expo-camera'
 import { Button } from "../../components"
-import { useSwiper } from "../../hooks/use-swiper"
+import { SwiperImageContext } from "../../context/SwiperImageContext"
 
 const CONTAINER: ViewStyle = {
   flex: 1,
@@ -43,7 +43,7 @@ export const TakePhotoScreen = function TakePhotoScreen() {
   const [type, setType] = useState(Camera.Constants.Type.back)
   // const [imageUri, setImageUri] = useState('')
   const cameraRef = useRef<Camera>(null)
-  const { image, setImage, swiperImages, handleSwiperImages } = useSwiper()
+  const { swiper: { image, setImage, swiperImages, handleSwiperImages } } = React.useContext(SwiperImageContext)
 
   console.log('soy swiperImages in take photo', swiperImages)
 

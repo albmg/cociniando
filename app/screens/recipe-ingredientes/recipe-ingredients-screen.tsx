@@ -25,7 +25,7 @@ const SCROLLVIEW: ViewStyle = {
   backgroundColor: color.palette.white
 }
 
-export const recipeIngredientsScreen = function recipeIngredientsScreen() {
+export const RecipeIngredientsScreen = function RecipeIngredientsScreen() {
   const [ingredients, setIngredients] = useState([])
 
   return (

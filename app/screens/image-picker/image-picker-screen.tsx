@@ -4,8 +4,7 @@ import { ViewStyle, Image, View, Platform, Alert, ImageStyle, Text, TextStyle } 
 // import { useStores } from "../../models"
 import * as ImagePicker from 'expo-image-picker'
 import { Button } from "../../components"
-import { useSwiper } from "../../hooks/use-swiper"
-import { NavigationContainer } from "@react-navigation/native"
+import { SwiperImageContext } from "../../context/SwiperImageContext"
 
 const VIEW: ViewStyle = {
   flex: 1, alignItems: 'center', justifyContent: 'center'
@@ -43,7 +42,9 @@ export const ImagePickerScreen = function ImagePickerScreen() {
   const [hasPermission, setHasPermission] = useState(null)
   // const [image, setImage] = useState(null)
   // const [swiperImages, setSwiperImages] = useState([])
-  const { image, setImage, swiperImages, handleSwiperImages } = useSwiper()
+
+  const { swiper: { image, setImage, swiperImages, handleSwiperImages } } = React.useContext(SwiperImageContext)
+
   console.log('soy image', image)
   console.log('soy swiperImages em imagePicker', swiperImages)
 
