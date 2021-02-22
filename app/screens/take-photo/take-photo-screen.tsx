@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react"
-import { observer } from "mobx-react-lite"
 import { ViewStyle, Text, View, TextStyle, ImageStyle, ImageBackground } from "react-native"
 import { Camera } from 'expo-camera'
 import { Button } from "../../components"
+import { useSwiper } from "../../hooks/use-swiper"
 
 const CONTAINER: ViewStyle = {
   flex: 1,
@@ -38,22 +38,19 @@ const IMAGE: ImageStyle = {
   height: "64%",
 }
 
-export const TakePhotoScreen = observer(function TakePhotoScreen() {
-  // Pull in one of our MST stores
-  // const { someStore, anotherStore } = useStores()
-
-  // Pull in navigation via hook
-  // const navigation = useNavigation()
-
+export const TakePhotoScreen = function TakePhotoScreen() {
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
-  const [imageUri, setImageUri] = useState('')
+  // const [imageUri, setImageUri] = useState('')
   const cameraRef = useRef<Camera>(null)
+  const { image, setImage, swiperImages, handleSwiperImages } = useSwiper()
+
+  console.log('soy swiperImages in take photo', swiperImages)
 
   async function takePhoto() {
     // console.tron.logImportant('not working')
     const { base64, width, height, uri } = await cameraRef.current.takePictureAsync({ quality: 1, base64: true })
-    setImageUri(uri)
+    setImage(uri)
   }
 
   async function flipCamera() {
@@ -76,17 +73,17 @@ export const TakePhotoScreen = observer(function TakePhotoScreen() {
     return <View />
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>
+    return <Text>Sin acceso a la cámara</Text>
   }
-  if (imageUri) {
+  if (image) {
     return (
       <View style={IMAGECONTAINER}>
-        <ImageBackground source={{ uri: imageUri }} style={IMAGE}>
+        <ImageBackground source={{ uri: image }} style={IMAGE}>
           <View style={ BUTTONCONTAINER}>
-            <Button onPress={() => setImageUri('')}>
+            <Button onPress={() => setImage('')}>
               <Text>Repeat</Text>
             </Button>
-            <Button>
+            <Button onPress={() => handleSwiperImages(image)}>
               <Text>Upload</Text>
             </Button>
           </View>
@@ -109,4 +106,4 @@ export const TakePhotoScreen = observer(function TakePhotoScreen() {
     </View>
 
   )
-})
+}

@@ -7,10 +7,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import { RecipesScreen } from "../screens/recipes/recipes-screen"
 import { SingleRecipeScreen } from "../screens/singleRecipe/singleRecipe-screen"
-import { CreateRecipeScreen } from "../screens/createRecipe/createRecipe-screen"
-import { DescriptionRecipeScreen } from "../screens/description-recipe/description-recipe-screen"
+import { recipeIngredientsScreen } from "../screens/recipe-ingredientes/recipe-ingredients-screen"
+import { RecipeDescriptionScreen } from "../screens/recipe-description/recipe-description-screen"
 import { TakePhotoScreen } from "../screens/take-photo/take-photo-screen"
-import { TakePhoto } from "../components/take-photo/take-photo"
+import { ImagePickerScreen } from "../screens/image-picker/image-picker-screen"
+import { RecipeInstructionsScreen } from "../screens/recipe-instructions/recipe-instructions-screen"
 
 // import Ionicons from '@expo/vector-icons/Ionicons'
 import { State } from 'react-native-gesture-handler'
@@ -25,14 +26,16 @@ export const StackNavigator = () => (
   <Stack.Navigator>
     <Stack.Screen name="Recipes" component={RecipesScreen} />
     <Stack.Screen name="SingleRecipe" component={SingleRecipeScreen} />
-    <Stack.Screen name="TakePhoto" component={TakePhoto} />
+    <Stack.Screen name="TakePhoto" component={TakePhotoScreen} />
+    <Stack.Screen name="PickPhoto" component={ImagePickerScreen} />
   </Stack.Navigator>
 )
 
 export const TopTabNavigator = () => (
   <TopTab.Navigator>
-    <Tab.Screen name="Descripción" component={DescriptionRecipeScreen} />
-    <Tab.Screen name="Crear" component={CreateRecipeScreen} />
+    <Tab.Screen name="Descripción" component={RecipeDescriptionScreen} />
+    <Tab.Screen name="Ingredientes" component={recipeIngredientsScreen} />
+    <Tab.Screen name="Elaboración" component={RecipeInstructionsScreen} />
   </TopTab.Navigator>
 )
 

@@ -18,6 +18,7 @@ const INPUT: TextStyle = {
   minHeight: 44,
   fontSize: 18,
   backgroundColor: color.palette.white,
+  padding: 5
 }
 
 // currently we have no presets, but that changes quickly when you build your app.
