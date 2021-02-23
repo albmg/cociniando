@@ -12,6 +12,7 @@ import { RecipeDescriptionScreen } from "../screens/recipe-description/recipe-de
 import { TakePhotoScreen } from "../screens/take-photo/take-photo-screen"
 import { ImagePickerScreen } from "../screens/image-picker/image-picker-screen"
 import { RecipeInstructionsScreen } from "../screens/recipe-instructions/recipe-instructions-screen"
+import { RegisterScreen } from "../screens/register/register-screen"
 
 // import Ionicons from '@expo/vector-icons/Ionicons'
 import { State } from 'react-native-gesture-handler'
@@ -44,6 +45,7 @@ export const TabNavigator = () => (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={StackNavigator} />
       <Tab.Screen name="Crear" component={TopTabNavigator} />
+      <Tab.Screen name="Account" component={RegisterScreen} />
     </Tab.Navigator>
   </NavigationContainer>
 )
