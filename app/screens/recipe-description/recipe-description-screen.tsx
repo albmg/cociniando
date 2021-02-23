@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react"
 import { ViewStyle, Pressable, View, TextStyle } from "react-native"
 import { Text } from "../../components"
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "../../models"
+
 import { color } from "../../theme"
 import { SwiperComponent } from "../../components/swiper/swiper"
 import Swiper from 'react-native-swiper'
@@ -71,14 +70,6 @@ const INPUTSTYLE: ViewStyle = {
   borderRadius: 5
 }
 
-// const CHECKBOXVIEW: ViewStyle = {
-//   marginTop: 5,
-//   alignItems: 'center'
-// }
-// const CHECKBOXTITLE: TextStyle = {
-//   color: color.palette.black
-// }
-
 export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ navigation }) {
   const [recipeName, setRecipeName] = useState('')
   const [time, setTime] = useState('')
@@ -107,10 +98,6 @@ export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ naviga
             <TextField style={TEXTINPUTSTYLE} placeholder="Añade tiempo de elaboración" onChangeText={(text) => setTime(text)} />
             <TextField style={TEXTINPUTSTYLE} placeholder="Añade nº porciones" onChangeText={(text) => setDiners(text)}/>
         </View>
-        {/* <View style={CHECKBOXVIEW}>
-          <Text style={CHECKBOXTITLE}>Selecciona una categoría:</Text>
-          <Checkbox text={hola} numberOfLines={5}/>
-        </View> */}
       </ScrollView>
     </View>
   )
