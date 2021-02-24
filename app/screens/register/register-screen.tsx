@@ -1,59 +1,72 @@
 import React, { useState } from "react"
-import { TextStyle, ViewStyle, TextInput, View } from "react-native"
+import { TextStyle, ViewStyle, TextInput, View, TouchableOpacity } from "react-native"
 import { Header, Screen, Text, Button } from "../../components"
-import { color } from "../../theme"
+import { color, fontSize } from "../../theme"
 import { useRegister } from '../../hooks/use-auth'
-import * as firebase from 'firebase'
+import { UserScreen } from "../user/user-screen"
 
 const ROOT: ViewStyle = {
   flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: 20
 }
 
 const TEXT: TextStyle = {
-  color: color.palette.black,
+  color: '#75c700',
+  fontWeight: 'bold'
 }
 
 const ERROR = {
   color: 'red'
 }
 
-export const RegisterScreen = function RegisterScreen() {
+const BUTTONSTYLE = {
+  marginTop: 15
+}
+
+const INPUT = {
+  borderColor: color.palette.lighterGrey,
+  padding: 10,
+  borderWidth: 1,
+  borderRadius: 5,
+  width: 250,
+  marginBottom: 15
+}
+
+const REGBUTTON = {
+  width: 250
+}
+
+const TITLETEXT = {
+  fontSize: fontSize.large,
+  color: color.palette.black,
+  marginBottom: 15
+}
+
+export const RegisterScreen = function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { error, register, login, user, setError, setUser } = useRegister()
+  const [repeatPassword, setRepeatPassword] = useState('')
+  const { error, register, user, setError, setUser } = useRegister()
 
   // console.log('soy user en register', user)
-
-  async function logout() {
-    firebase.auth().signOut().then(() => {
-      setError('')
-      setUser(null)
-      // setLoading(false)
-    }).catch((error) => {
-      setError(error.message)
-    })
-  }
 
   return (
     <Screen style={ROOT}>
       {user
-        ? <>
-          <Header headerText="User" />
-           <View>
-              <Text style={TEXT}>
-              {/* User: {JSON.stringify({ ...user })} */}
-              {user.email}
-              </Text>
-            </View>
-            <Button onPress={logout}><Text>Logout</Text></Button>
-        </>
+        ? <UserScreen user={user} setError={setError} setUser={setUser}/>
         : <>
-      <View>
+      <View style={ROOT}>
           <Header headerText="Register" />
-            <TextInput placeholder="Email" onChangeText={setEmail} value={email} />
-            <TextInput placeholder="Password" onChangeText={setPassword} value={password} secureTextEntry={true} />
-            <Button onPress={() => register(email, password)}><Text>Register</Text></Button>
-            <Button onPress={() => login(email, password)}><Text>Login</Text></Button>
+            <Text style={TITLETEXT}>Crear una cuenta</Text>
+            <TextInput style={INPUT} placeholder="Email" onChangeText={setEmail} value={email} />
+            <TextInput style={INPUT} placeholder="Contraseña" onChangeText={setPassword} value={password} secureTextEntry={true} />
+            <TextInput style={INPUT} placeholder="Repetir contraseña" onChangeText={setRepeatPassword} value={repeatPassword} secureTextEntry={true} />
+            <Button style={REGBUTTON} onPress={() => register(email, password)}><Text>Regístrate</Text></Button>
+            <TouchableOpacity style={BUTTONSTYLE} onPress={() => navigation.navigate('Login')}>
+              <Text style={TEXT}>Ya tienes una cuenta? Inicia sesión</Text>
+            </TouchableOpacity>
           {!!error && <Text style={ERROR}> Error: {error} </Text>}
       </View>
 

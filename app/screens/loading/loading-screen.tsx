@@ -1,11 +1,13 @@
 import React from "react"
 import { TextStyle, ViewStyle, ActivityIndicator, Text, View } from "react-native"
-import { Header, Screen } from "../../components"
+import { Screen } from "../../components"
 import { color, spacing } from "../../theme"
 
 const ROOT: ViewStyle = {
   flex: 1,
-  backgroundColor: 'purple'
+  backgroundColor: '#75c700',
+  justifyContent: 'center',
+  alignItems: 'center'
 }
 const CONTENT: ViewStyle = {
   flex: 1,
@@ -14,7 +16,7 @@ const CONTENT: ViewStyle = {
 
 const TEXT: TextStyle = {
   color: color.palette.white,
-  fontSize: 25
+  fontSize: 45
 }
 
 export const LoadingScreen = function LoadingScreen() {

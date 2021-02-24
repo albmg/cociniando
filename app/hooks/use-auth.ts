@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import * as firebase from 'firebase'
+import { storeData } from "../utils/async-storage"
 
 export function useRegister () {
   const [error, setError] = useState('')
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState('')
-  console.log('soy token', token)
+  // const [token, setToken] = useState('')
+  // console.log('soy token', token)
 
   async function register(email, password) {
     try {
       const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password)
       setUser(user)
-      // window.user = user
       const token = await user.getIdToken()
-      setToken(token)
+      storeData(token)
+      // setToken(token)
     } catch ({ message }) {
       setError(message)
     }
@@ -23,13 +24,13 @@ export function useRegister () {
     try {
       const { user } = await firebase.auth().signInWithEmailAndPassword(email, password)
       setUser(user)
-      // window.user = user
       const token = await user.getIdToken()
-      setToken(token)
+      storeData(token)
+      // setToken(token)
     } catch ({ message }) {
       setError(message)
     }
   }
 
-  return { error, register, user, login, setUser, setError, token }
+  return { error, register, user, login, setUser, setError }
 }

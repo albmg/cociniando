@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { ViewStyle, Pressable, View, TextStyle } from "react-native"
-import { Text } from "../../components"
+import { Text, Screen } from "../../components"
 
 import { color } from "../../theme"
 import { SwiperComponent } from "../../components/swiper/swiper"
@@ -76,29 +76,31 @@ export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ naviga
   const [diners, setDiners] = useState('')
   const { swiper: { swiperImages } } = useContext(SwiperImageContext)
 
-  console.log(recipeName)
-  console.log(time)
-  console.log(diners)
+  // console.log(recipeName)
+  // console.log(time)
+  // console.log(diners)
 
-  console.log('soy swiper en description', swiperImages)
+  // console.log('soy swiper en description', swiperImages)
 
   return (
-    <View style={ROOT}>
-      <ScrollView>
-      {swiperImages.length > 0 && <Swiper showsButtons={false} paginationStyle={DOTS} dot={<View style={DOT} />} activeDot={<View style={ACTIVEDOT} />} height={275}>
-            {swiperImages.map((recipe, index) => <SwiperComponent key={index} url={recipe} name={recipe.name} />)}
-        </Swiper>}
-      {swiperImages.length > 0 ? <Text style={TITLETEXT}>Añadir otra foto</Text> : <Text style={TITLETEXT}>Añadir foto de la receta</Text>}
-        <View style={BUTTONCONTAINER}>
-          <Pressable onPress={() => navigation.navigate('TakePhoto')}><Text style={BACKGROUND}>Acceder a la cámara</Text></Pressable>
-          <Pressable onPress={() => navigation.navigate('PickPhoto')}><Text style={BACKGROUND}>Acceder al teléfono</Text></Pressable>
+    <Screen style={ROOT}>
+       <View style={ROOT}>
+          <ScrollView>
+          {swiperImages.length > 0 && <Swiper showsButtons={false} paginationStyle={DOTS} dot={<View style={DOT} />} activeDot={<View style={ACTIVEDOT} />} height={275}>
+                {swiperImages.map((item, index) => <SwiperComponent key={index} url={item} name={item.name}/>)}
+            </Swiper>}
+          {swiperImages.length > 0 ? <Text style={TITLETEXT}>Añadir otra foto</Text> : <Text style={TITLETEXT}>Añadir foto de la receta</Text>}
+            <View style={BUTTONCONTAINER}>
+              <Pressable onPress={() => navigation.navigate('TakePhoto')}><Text style={BACKGROUND}>Acceder a la cámara</Text></Pressable>
+              <Pressable onPress={() => navigation.navigate('PickPhoto')}><Text style={BACKGROUND}>Acceder al teléfono</Text></Pressable>
+            </View>
+            <View style={INPUTSTYLE}>
+                <TextField style={TEXTINPUTSTYLE} placeholder="Añade un nombre para tu receta" onChangeText={(text) => setRecipeName(text)} />
+                <TextField style={TEXTINPUTSTYLE} placeholder="Añade tiempo de elaboración" onChangeText={(text) => setTime(text)} />
+                <TextField style={TEXTINPUTSTYLE} placeholder="Añade nº porciones" onChangeText={(text) => setDiners(text)}/>
+            </View>
+          </ScrollView>
         </View>
-        <View style={INPUTSTYLE}>
-            <TextField style={TEXTINPUTSTYLE} placeholder="Añade un nombre para tu receta" onChangeText={(text) => setRecipeName(text)} />
-            <TextField style={TEXTINPUTSTYLE} placeholder="Añade tiempo de elaboración" onChangeText={(text) => setTime(text)} />
-            <TextField style={TEXTINPUTSTYLE} placeholder="Añade nº porciones" onChangeText={(text) => setDiners(text)}/>
-        </View>
-      </ScrollView>
-    </View>
+    </Screen>
   )
 }
