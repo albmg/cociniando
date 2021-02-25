@@ -3,6 +3,7 @@ import { TextStyle, ViewStyle, View } from "react-native"
 import { Header, Screen, Text, Button } from "../../components"
 import * as firebase from 'firebase'
 import { useCurrentUser } from "../../hooks/use-current-user"
+import { color } from "../../theme"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -11,6 +12,15 @@ const ROOT: ViewStyle = {
 const TEXT: TextStyle = {
   color: '#75c700',
   fontWeight: 'bold'
+}
+
+const BUTTONSTYLE = {
+  backgroundColor: color.palette.black
+}
+
+const BUTTONVIEW: ViewStyle = {
+  flex: 1,
+  justifyContent: 'flex-end'
 }
 
 export const UserScreen = function UserScreen() {
@@ -42,7 +52,9 @@ export const UserScreen = function UserScreen() {
           Bienvenido: {user.email}
           </Text>
      </View>
-     <Button onPress={logout}><Text>Cerrar sesión</Text></Button>
+     <View style={BUTTONVIEW}>
+      <Button style={BUTTONSTYLE} onPress={logout}><Text>Cerrar sesión</Text></Button>
+     </View>
     </Screen>
   )
 }

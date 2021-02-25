@@ -2,10 +2,7 @@ import React, { useState } from "react"
 import { TextStyle, ViewStyle, TextInput, View, TouchableOpacity } from "react-native"
 import { Header, Screen, Text, Button } from "../../components"
 import { color, fontSize } from "../../theme"
-import { UserScreen } from "../user/user-screen"
 import { useRegister } from '../../hooks/use-auth'
-// import { getData } from "../../utils/async-storage"
-import { useCurrentUser } from "../../hooks/use-current-user"
 
 const ROOT: ViewStyle = {
   flex: 1,

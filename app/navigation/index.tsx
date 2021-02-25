@@ -16,6 +16,7 @@ import { PreviewRecipeScreen } from "../screens/preview-recipe/preview-recipe-sc
 import { RegisterScreen } from "../screens/register/register-screen"
 import { LoginScreen } from "../screens/login/login-screen"
 import { UserScreen } from '../screens/user/user-screen'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -43,8 +44,15 @@ export const StackNavigator = () => (
 )
 
 export const TopTabNavigator = () => (
-  <TopTab.Navigator tabBarOptions= {{ labelStyle: { fontSize: 9 } }} >
-    <Tab.Screen name="Descripción" component={RecipeDescriptionScreen} />
+  <TopTab.Navigator
+    tabBarOptions= {{
+      activeTintColor: '#75c700',
+      labelStyle: { fontSize: 9 },
+      inactiveTintColor: 'black',
+      showIcon: true,
+    }}
+    >
+    <Tab.Screen name="Descripción" component={RecipeDescriptionScreen}/>
     <Tab.Screen name="Ingredientes" component={RecipeIngredientsScreen} />
     <Tab.Screen name="Elaboración" component={RecipeInstructionsScreen} />
     <Tab.Screen name="Previsualizar" component={PreviewRecipeScreen} />
@@ -54,11 +62,28 @@ export const TopTabNavigator = () => (
 export const TabNavigator = (props) => (
   <NavigationContainer>
     <Tab.Navigator
+      screenOptions={({ route }) => ({
+        // eslint-disable-next-line react/display-name
+        tabBarIcon: ({ color }) => {
+          let iconName: string
+
+          if (route.name === 'Home') {
+            iconName = 'home'
+          } else if (route.name === 'Crear') {
+            iconName = 'add'
+          } else if (route.name === 'User' || 'Account') {
+            iconName = 'person'
+          }
+
+          return <MaterialIcons name={iconName} size={24} color={color} />
+        },
+      })}
+    tabBarOptions={{
+      activeTintColor: '#75c700',
+      inactiveTintColor: 'gray'
+    }}
       >
-      <Tab.Screen
-        name="Home"
-        component={StackNavigator}
-        />
+      <Tab.Screen name="Home" component={StackNavigator}/>
       {props.user && <Tab.Screen name="Crear" component={TopTabNavigator} />}
       {props.user ? <Tab.Screen name="User" component={UserScreen}/> : <Tab.Screen name="Account" component={AuthNavigator} />}
     </Tab.Navigator>
