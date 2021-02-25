@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useState, useContext } from "react"
 import { View, Text, ViewStyle, TextStyle } from "react-native"
 import { TextField } from "../../components/text-field/text-field"
 import { color, fontSize } from "../../theme"
@@ -31,6 +31,8 @@ export const RecipeInstructionsScreen = function RecipeInstructionsScreen() {
   const {
     setMaking
   } = useContext(PreviewRecipeContext)
+
+  //  setMaking([...making, first, second, third, fourth])
 
   return (
     <View style={ROOT}>

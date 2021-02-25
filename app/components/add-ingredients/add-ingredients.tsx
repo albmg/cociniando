@@ -48,7 +48,6 @@ const BUTTONACCEPT = {
 }
 
 const BUTTONCLOSE = {
-  // backgroundColor: "#2196F3",
   backgroundColor: 'red'
 }
 
@@ -117,15 +116,6 @@ export const AddIngredients = observer(function AddIngredients(props: AddIngredi
       name: "jamón"
     }
   ]
-
-  // console.log('jelou2', ingredients)
-
-  // const addIng = (item) => {
-  //   if (!ingredients.includes(item.name)) {
-  //     setIngredients()
-  //     console.log('jelou', ingredients)
-  //   }
-  // }
 
   return (
     <View style={CENTEREDVIEWVIEw}>

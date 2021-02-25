@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera'
 import { Button } from "../../components"
 import * as firebase from 'firebase'
 import { PreviewRecipeContext } from "../../context/previewRecipeContext"
+import { FontAwesome } from '@expo/vector-icons'
 
 const CONTAINER: ViewStyle = {
   flex: 1,
@@ -24,7 +25,7 @@ const BUTTONCONTAINER: ViewStyle = {
 }
 
 const TEXT: TextStyle = {
-  fontSize: 18,
+  fontSize: 16,
   color: 'white',
 }
 
@@ -39,14 +40,16 @@ const IMAGE: ImageStyle = {
   height: "64%",
 }
 
+const FABUTTON = {
+  backgroundColor: 'orange',
+
+}
 export const TakePhotoScreen = function TakePhotoScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
   // const [imageUri, setImageUri] = useState('')
   const cameraRef = useRef<Camera>(null)
   const { swiper: { imageUri, setImageUri, swiperImages, handleSwiperCameraImages } } = useContext(PreviewRecipeContext)
-
-  console.log('soy swiperImages in take photo', swiperImages)
 
   const uploadImage = async (uri, imageName) => {
     const response = await fetch(uri)
@@ -72,9 +75,6 @@ export const TakePhotoScreen = function TakePhotoScreen({ navigation }) {
   }
 
   async function flipCamera() {
-    // console.tron.log('hola')
-    // console.tron.logImportant('hola2')
-    console.log('hola')
     setType(type === Camera.Constants.Type.back
       ? Camera.Constants.Type.front
       : Camera.Constants.Type.back)
@@ -113,15 +113,15 @@ export const TakePhotoScreen = function TakePhotoScreen({ navigation }) {
     <View style={CONTAINER}>
       <Camera ref={cameraRef} style={CAMERA} type={type} >
         <View style={BUTTONCONTAINER}>
-          <Button onPress={flipCamera}>
+          <FontAwesome.Button style={FABUTTON} name="refresh" onPress={flipCamera}>
             <Text style={TEXT}>Flip camera</Text>
-          </Button>
-          <Button onPress={takePhoto}>
+          </FontAwesome.Button>
+          <FontAwesome.Button style={FABUTTON} name="camera" onPress={takePhoto}>
             <Text style={TEXT}>Take photo</Text>
-          </Button>
-          <Button onPress={() => goBack()}>
+          </FontAwesome.Button>
+          <FontAwesome.Button name="undo" onPress={() => goBack()}>
             <Text style={TEXT}>Volver</Text>
-          </Button>
+          </FontAwesome.Button>
         </View>
       </Camera>
     </View>

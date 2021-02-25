@@ -11,6 +11,7 @@ import { PreviewRecipeContext } from "../../context/previewRecipeContext"
 
 const VIEW: ViewStyle = {
   flex: 1,
+  justifyContent: 'center'
 }
 
 const IMAGE: ImageStyle = {
@@ -39,6 +40,7 @@ const TEXTPICKBUTTON: TextStyle = {
   fontSize: 18,
   color: 'white',
   textAlign: 'center',
+  fontWeight: 'bold'
 }
 
 const TEXTIMAGE: TextStyle = {
@@ -49,8 +51,9 @@ const TEXTIMAGE: TextStyle = {
 }
 
 const BUTTONSTYLE = {
-  width: "50%",
-  backgroundColor: 'green'
+  width: "80%",
+  backgroundColor: '#5bc0de',
+  marginTop: 25
 }
 
 const IMAGEVIEW: ViewStyle = {
@@ -61,7 +64,9 @@ const IMAGEVIEW: ViewStyle = {
 
 const PICKBUTTONSTYLE = {
   marginHorizontal: 5,
-  marginTop: 15
+  marginTop: 15,
+  backgroundColor: 'orange',
+  width: "80%"
 }
 
 const VIEWSELECT: ViewStyle = {
@@ -76,7 +81,7 @@ const INPUT = {
   padding: 10,
   borderWidth: 1,
   borderRadius: 5,
-  width: 250,
+  width: "80%",
   // marginBottom: 15
 }
 
@@ -165,10 +170,10 @@ export const ImagePickerScreen = function ImagePickerScreen({ navigation }) {
         <View style={VIEWSELECT}>
           <TextInput style={INPUT} onChangeText={(text) => setImageDescription(text)} placeholder={'Añade un nombre a la foto'}></TextInput>
           <Button style={PICKBUTTONSTYLE} onPress={pickImage}>
-            {!image && swiperImages.length > 0 ? <Text style={TEXTPICKBUTTON}>Seleccionar una imagen de la cámara</Text>
+            {!image && swiperImages.length === 0 ? <Text style={TEXTPICKBUTTON}>Seleccionar una imagen de la cámara</Text>
               : <Text style={TEXTPICKBUTTON}>Seleccionar otra imagen</Text> }
           </Button>
-          <Button style={BUTTONSTYLE} onPress={() => goBack()}><Text style={TEXT}>Go back</Text></Button>
+          <Button style={BUTTONSTYLE} onPress={() => goBack()}><Text style={TEXT}>Volver</Text></Button>
         </View>
       </View>
   )

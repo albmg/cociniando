@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { ViewStyle, Pressable, View, TextStyle } from "react-native"
 import { Text, Screen } from "../../components"
 
-import { color } from "../../theme"
+import { color, fontSize } from "../../theme"
 import { SwiperComponent } from "../../components/swiper/swiper"
 import Swiper from 'react-native-swiper'
 import { TextField } from "../../components/text-field/text-field"
@@ -24,17 +24,23 @@ const BUTTONCONTAINER: ViewStyle = {
   justifyContent: 'space-around',
 }
 
-const BACKGROUND: TextStyle = {
-  backgroundColor: 'purple',
+const TEXTCAMERABUTTON: TextStyle = {
   color: color.palette.white,
   padding: 5,
-  marginTop: 20
+  fontWeight: 'bold'
+}
+
+const CAMERABUTTON = {
+  backgroundColor: 'orange',
+  borderRadius: 5,
+  padding: 10
 }
 
 const TITLETEXT: TextStyle = {
   color: color.palette.black,
   textAlign: 'center',
-  marginTop: 15
+  marginTop: 15,
+  fontSize: fontSize.large
 }
 
 const DOTS: ViewStyle = {
@@ -87,8 +93,8 @@ export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ naviga
             </Swiper>}
           {swiperImages.length > 0 ? <Text style={TITLETEXT}>Añadir otra foto</Text> : <Text style={TITLETEXT}>Añadir foto de la receta</Text>}
             <View style={BUTTONCONTAINER}>
-              <Pressable onPress={() => navigation.navigate('TakePhoto')}><Text style={BACKGROUND}>Acceder a la cámara</Text></Pressable>
-              <Pressable onPress={() => navigation.navigate('PickPhoto')}><Text style={BACKGROUND}>Acceder al teléfono</Text></Pressable>
+              <Pressable style={CAMERABUTTON} onPress={() => navigation.navigate('TakePhoto')}><Text style={TEXTCAMERABUTTON}>Acceder a la cámara</Text></Pressable>
+              <Pressable style={CAMERABUTTON} onPress={() => navigation.navigate('PickPhoto')}><Text style={TEXTCAMERABUTTON}>Acceder al teléfono</Text></Pressable>
             </View>
             <View style={INPUTSTYLE}>
                 <TextField style={TEXTINPUTSTYLE} placeholder="Añade un nombre para tu receta" onChangeText={(text) => setRecipeName(text)} />

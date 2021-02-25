@@ -8,7 +8,7 @@ const PreviewRecipeProvider = ({ children }) => {
   const [time, setTime] = useState('')
   const [diners, setDiners] = useState('')
   const [ingredients, setIngredients] = useState([])
-  const [making, setMaking] = useState('')
+  const [making, setMaking] = useState([])
   const swiper = useSwiper()
 
   const store = {
