@@ -14,14 +14,13 @@ import {
   QueryClientProvider,
 } from 'react-query'
 
-import StoreProvider from "./context/SwiperImageContext"
-
 import { enableScreens } from "react-native-screens"
 
 import * as firebase from 'firebase'
 import { firebaseConfig } from './services/setup-firebase'
 import { useRegister } from './hooks/use-auth'
 import { LoadingScreen } from './screens/loading/loading-screen'
+import PreviewRecipeProvider from "./context/previewRecipeContext"
 
 enableScreens()
 
@@ -33,7 +32,7 @@ const queryClient = new QueryClient()
  * This is the root component of our app.
  */
 function App() {
-  const { setError, setUser, token } = useRegister()
+  const { setError, setUser, user } = useRegister()
   const [loading, setLoading] = useState(true)
 
   // Kick off initial async loading actions, like loading fonts and RootStore
@@ -56,6 +55,7 @@ function App() {
         setUser({ uid: user.uid, displayName: user.displayName, email: user.email })
         setError('')
       }
+      setUser(user)
       setLoading(false)
     })
   }, [])
@@ -70,9 +70,9 @@ function App() {
     <ToggleStorybook>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <QueryClientProvider client={queryClient}>
-          <StoreProvider>
-            <TabNavigator />
-          </StoreProvider>
+            <PreviewRecipeProvider>
+              <TabNavigator user={user}/>
+            </PreviewRecipeProvider>
         </QueryClientProvider>
         </SafeAreaProvider>
     </ToggleStorybook>

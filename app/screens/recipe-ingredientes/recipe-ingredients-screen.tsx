@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useContext } from "react"
 import { View, Text, ViewStyle, TextStyle } from "react-native"
 import { color, fontSize } from "../../theme"
 import { AddIngredients } from "../../components/add-ingredients/add-ingredients"
 import { ScrollView } from "react-native-gesture-handler"
+import { PreviewRecipeContext } from "../../context/previewRecipeContext"
 
 const ROOT: ViewStyle = {
   flex: 1
@@ -26,7 +27,10 @@ const SCROLLVIEW: ViewStyle = {
 }
 
 export const RecipeIngredientsScreen = function RecipeIngredientsScreen() {
-  const [ingredients, setIngredients] = useState([])
+  const {
+    ingredients,
+    setIngredients,
+  } = useContext(PreviewRecipeContext)
 
   return (
     <View style={ROOT}>

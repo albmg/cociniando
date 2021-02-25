@@ -12,10 +12,10 @@ import { RecipeDescriptionScreen } from "../screens/recipe-description/recipe-de
 import { TakePhotoScreen } from "../screens/take-photo/take-photo-screen"
 import { ImagePickerScreen } from "../screens/image-picker/image-picker-screen"
 import { RecipeInstructionsScreen } from "../screens/recipe-instructions/recipe-instructions-screen"
+import { PreviewRecipeScreen } from "../screens/preview-recipe/preview-recipe-screen"
 import { RegisterScreen } from "../screens/register/register-screen"
 import { LoginScreen } from "../screens/login/login-screen"
-
-// import Ionicons from '@expo/vector-icons/Ionicons'
+import { UserScreen } from '../screens/user/user-screen'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -23,14 +23,18 @@ const TopTab = createMaterialTopTabNavigator()
 const Auth = createStackNavigator()
 
 export const AuthNavigator = () => (
-  <Auth.Navigator>
-    <Stack.Screen name="Login" component={LoginScreen} />
-    <Stack.Screen name="SignUp" component={RegisterScreen} />
-  </Auth.Navigator>
+
+    <Auth.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="SignUp" component={RegisterScreen} />
+    </Auth.Navigator>
+
 )
 
 export const StackNavigator = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <Stack.Screen name="Recipes" component={RecipesScreen} />
     <Stack.Screen name="SingleRecipe" component={SingleRecipeScreen} />
     <Stack.Screen name="TakePhoto" component={TakePhotoScreen} />
@@ -39,19 +43,24 @@ export const StackNavigator = () => (
 )
 
 export const TopTabNavigator = () => (
-  <TopTab.Navigator>
+  <TopTab.Navigator tabBarOptions= {{ labelStyle: { fontSize: 9 } }} >
     <Tab.Screen name="Descripción" component={RecipeDescriptionScreen} />
     <Tab.Screen name="Ingredientes" component={RecipeIngredientsScreen} />
     <Tab.Screen name="Elaboración" component={RecipeInstructionsScreen} />
+    <Tab.Screen name="Previsualizar" component={PreviewRecipeScreen} />
   </TopTab.Navigator>
 )
 
-export const TabNavigator = () => (
+export const TabNavigator = (props) => (
   <NavigationContainer>
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={StackNavigator} />
-      <Tab.Screen name="Crear" component={TopTabNavigator} />
-      <Tab.Screen name="Account" component={AuthNavigator} />
+    <Tab.Navigator
+      >
+      <Tab.Screen
+        name="Home"
+        component={StackNavigator}
+        />
+      {props.user && <Tab.Screen name="Crear" component={TopTabNavigator} />}
+      {props.user ? <Tab.Screen name="User" component={UserScreen}/> : <Tab.Screen name="Account" component={AuthNavigator} />}
     </Tab.Navigator>
   </NavigationContainer>
 )

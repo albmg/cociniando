@@ -5,6 +5,7 @@ import { color, fontSize } from "../../theme"
 import { UserScreen } from "../user/user-screen"
 import { useRegister } from '../../hooks/use-auth'
 // import { getData } from "../../utils/async-storage"
+import { useCurrentUser } from "../../hooks/use-current-user"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -48,18 +49,10 @@ const TITLETEXT = {
 export const LoginScreen = function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { error, login, user, setError, setUser } = useRegister()
-
-  // console.log('soy user', user)
-
-  // const isSignedIn = getData().then(res => console.log("isSignedIn ------------>", res))
-  // console.log(isSignedIn)
+  const { error, login } = useRegister()
 
   return (
     <Screen style={ROOT}>
-      {user
-        ? <UserScreen user={user} setError={setError} setUser={setUser}/>
-        : <>
       <View style={ROOT}>
           <Header headerText="Register" />
             <Text style={TITLETEXT}>Iniciar sesión</Text>
@@ -71,8 +64,6 @@ export const LoginScreen = function LoginScreen({ navigation }) {
             </TouchableOpacity>
           {!!error && <Text style={ERROR}> Error: {error} </Text>}
       </View>
-        </>
-      }
     </Screen>
   )
 }

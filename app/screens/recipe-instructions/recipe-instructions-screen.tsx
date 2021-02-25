@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useContext } from "react"
 import { View, Text, ViewStyle, TextStyle } from "react-native"
 import { TextField } from "../../components/text-field/text-field"
 import { color, fontSize } from "../../theme"
 import { ScrollView } from "react-native-gesture-handler"
+import { PreviewRecipeContext } from "../../context/previewRecipeContext"
 
 const ROOT: ViewStyle = {
   flex: 1
@@ -27,7 +28,9 @@ const INPUTSTYLE: ViewStyle = {
 }
 
 export const RecipeInstructionsScreen = function RecipeInstructionsScreen() {
-  const [making, setMaking] = useState('null')
+  const {
+    setMaking
+  } = useContext(PreviewRecipeContext)
 
   return (
     <View style={ROOT}>

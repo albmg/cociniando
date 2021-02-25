@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import * as firebase from 'firebase'
-import { storeData } from "../utils/async-storage"
 
 export function useRegister () {
   const [error, setError] = useState('')
@@ -12,8 +11,7 @@ export function useRegister () {
     try {
       const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password)
       setUser(user)
-      const token = await user.getIdToken()
-      storeData(token)
+      // const token = await user.getIdToken()
       // setToken(token)
     } catch ({ message }) {
       setError(message)
@@ -24,8 +22,7 @@ export function useRegister () {
     try {
       const { user } = await firebase.auth().signInWithEmailAndPassword(email, password)
       setUser(user)
-      const token = await user.getIdToken()
-      storeData(token)
+      // const token = await user.getIdToken()
       // setToken(token)
     } catch ({ message }) {
       setError(message)

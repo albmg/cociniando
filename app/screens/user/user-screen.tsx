@@ -2,7 +2,7 @@ import React from "react"
 import { TextStyle, ViewStyle, View } from "react-native"
 import { Header, Screen, Text, Button } from "../../components"
 import * as firebase from 'firebase'
-import { removeValue } from "../../utils/async-storage"
+import { useCurrentUser } from "../../hooks/use-current-user"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -13,8 +13,9 @@ const TEXT: TextStyle = {
   fontWeight: 'bold'
 }
 
-export const UserScreen = function UserScreen({ user, setError, setUser }) {
-  // const { setError, setUser, user } = useRegister()
+export const UserScreen = function UserScreen() {
+  // const { setError, setUser } = useRegister()
+  const user = useCurrentUser()
 
   console.log('soy user en userscreen', user)
   console.log(user.email)
@@ -22,12 +23,13 @@ export const UserScreen = function UserScreen({ user, setError, setUser }) {
 
   async function logout() {
     firebase.auth().signOut().then(() => {
-      removeValue()
-      setError('')
-      setUser(null)
+      // removeValue()
+      // setError('')
+      // setUser(null)
       // setLoading(false)
     }).catch((error) => {
-      setError(error.message)
+      // setError(error.message)
+      console.error(error)
     })
   }
 

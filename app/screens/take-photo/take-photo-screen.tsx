@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import { ViewStyle, Text, View, TextStyle, ImageStyle, ImageBackground } from "react-native"
 import { Camera } from 'expo-camera'
 import { Button } from "../../components"
-import { SwiperImageContext } from "../../context/SwiperImageContext"
+import * as firebase from 'firebase'
+import { PreviewRecipeContext } from "../../context/previewRecipeContext"
 
 const CONTAINER: ViewStyle = {
   flex: 1,
@@ -38,19 +39,36 @@ const IMAGE: ImageStyle = {
   height: "64%",
 }
 
-export const TakePhotoScreen = function TakePhotoScreen() {
+export const TakePhotoScreen = function TakePhotoScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
   // const [imageUri, setImageUri] = useState('')
   const cameraRef = useRef<Camera>(null)
-  const { swiper: { image, setImage, swiperImages, handleSwiperImages } } = React.useContext(SwiperImageContext)
+  const { swiper: { imageUri, setImageUri, swiperImages, handleSwiperCameraImages } } = useContext(PreviewRecipeContext)
 
   console.log('soy swiperImages in take photo', swiperImages)
+
+  const uploadImage = async (uri, imageName) => {
+    const response = await fetch(uri)
+    const blob = await response.blob()
+
+    const ref = firebase.storage().ref().child(`images/${imageName}`)
+    const snapshot = await ref.put(blob)
+    return snapshot.ref.getDownloadURL().then(function(downloadURL) {
+      console.log('FIle available at', downloadURL)
+      setImageUri(downloadURL)
+    })
+  }
+
+  const goBack = () => {
+    navigation.navigate("Descripción")
+  }
 
   async function takePhoto() {
     // console.tron.logImportant('not working')
     const { base64, width, height, uri } = await cameraRef.current.takePictureAsync({ quality: 1, base64: true })
-    setImage(uri)
+    uploadImage(uri, 'pruebita')
+    // setImageUri(uri)
   }
 
   async function flipCamera() {
@@ -75,15 +93,15 @@ export const TakePhotoScreen = function TakePhotoScreen() {
   if (hasPermission === false) {
     return <Text>Sin acceso a la cámara</Text>
   }
-  if (image) {
+  if (imageUri) {
     return (
       <View style={IMAGECONTAINER}>
-        <ImageBackground source={{ uri: image }} style={IMAGE}>
+        <ImageBackground source={{ uri: imageUri }} style={IMAGE}>
           <View style={ BUTTONCONTAINER}>
-            <Button onPress={() => setImage('')}>
+            <Button onPress={() => setImageUri('')}>
               <Text>Repeat</Text>
             </Button>
-            <Button onPress={() => handleSwiperImages(image)}>
+            <Button onPress={() => handleSwiperCameraImages(imageUri)}>
               <Text>Upload</Text>
             </Button>
           </View>
@@ -100,6 +118,9 @@ export const TakePhotoScreen = function TakePhotoScreen() {
           </Button>
           <Button onPress={takePhoto}>
             <Text style={TEXT}>Take photo</Text>
+          </Button>
+          <Button onPress={() => goBack()}>
+            <Text style={TEXT}>Volver</Text>
           </Button>
         </View>
       </Camera>

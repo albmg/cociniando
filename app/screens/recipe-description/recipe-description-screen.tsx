@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { ViewStyle, Pressable, View, TextStyle } from "react-native"
 import { Text, Screen } from "../../components"
 
@@ -7,7 +7,7 @@ import { SwiperComponent } from "../../components/swiper/swiper"
 import Swiper from 'react-native-swiper'
 import { TextField } from "../../components/text-field/text-field"
 import { ScrollView } from "react-native-gesture-handler"
-import { SwiperImageContext } from "../../context/SwiperImageContext"
+import { PreviewRecipeContext } from "../../context/previewRecipeContext"
 
 const ROOT: ViewStyle = {
   // backgroundColor: color.palette.black,
@@ -71,16 +71,12 @@ const INPUTSTYLE: ViewStyle = {
 }
 
 export const RecipeDescriptionScreen = function RecipeDescriptionScreen({ navigation }) {
-  const [recipeName, setRecipeName] = useState('')
-  const [time, setTime] = useState('')
-  const [diners, setDiners] = useState('')
-  const { swiper: { swiperImages } } = useContext(SwiperImageContext)
-
-  // console.log(recipeName)
-  // console.log(time)
-  // console.log(diners)
-
-  // console.log('soy swiper en description', swiperImages)
+  const {
+    setRecipeName,
+    setTime,
+    setDiners,
+    swiper: { swiperImages }
+  } = useContext(PreviewRecipeContext)
 
   return (
     <Screen style={ROOT}>

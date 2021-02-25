@@ -4,6 +4,7 @@ import { Header, Screen, Text, Button } from "../../components"
 import { color, fontSize } from "../../theme"
 import { useRegister } from '../../hooks/use-auth'
 import { UserScreen } from "../user/user-screen"
+import { useCurrentUser } from "../../hooks/use-current-user"
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -48,15 +49,10 @@ export const RegisterScreen = function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
-  const { error, register, user, setError, setUser } = useRegister()
-
-  // console.log('soy user en register', user)
+  const { error, register } = useRegister()
 
   return (
     <Screen style={ROOT}>
-      {user
-        ? <UserScreen user={user} setError={setError} setUser={setUser}/>
-        : <>
       <View style={ROOT}>
           <Header headerText="Register" />
             <Text style={TITLETEXT}>Crear una cuenta</Text>
@@ -70,9 +66,6 @@ export const RegisterScreen = function RegisterScreen({ navigation }) {
           {!!error && <Text style={ERROR}> Error: {error} </Text>}
       </View>
 
-        </>
-
-      }
     </Screen>
   )
 }

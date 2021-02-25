@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { ViewStyle, Image, View, Platform, Alert, ImageStyle, Text, TextStyle } from "react-native"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import * as ImagePicker from 'expo-image-picker'
 import { Button } from "../../components"
-import { SwiperImageContext } from "../../context/SwiperImageContext"
+import * as firebase from 'firebase'
+import { TextInput } from "react-native-gesture-handler"
+import { color, fontSize } from "../../theme"
+import { PreviewRecipeContext } from "../../context/previewRecipeContext"
 
 const VIEW: ViewStyle = {
-  flex: 1, alignItems: 'center', justifyContent: 'center'
+  flex: 1,
 }
 
 const IMAGE: ImageStyle = {
@@ -18,35 +21,77 @@ const BUTTONCONTAINER: ViewStyle = {
   flex: 1,
   backgroundColor: 'transparent',
   flexDirection: 'row',
-  marginHorizontal: 20,
+  marginHorizontal: 40,
   // marginVertical: 40,
   marginBottom: 15,
   alignItems: 'center',
-  justifyContent: 'space-around',
+  justifyContent: 'center',
 }
 
 const TEXT: TextStyle = {
   fontSize: 18,
   color: 'white',
+  textAlign: 'center',
+  // marginTop: 15
+}
+
+const TEXTPICKBUTTON: TextStyle = {
+  fontSize: 18,
+  color: 'white',
+  textAlign: 'center',
+}
+
+const TEXTIMAGE: TextStyle = {
+  fontSize: fontSize.large,
+  color: color.palette.black,
+  marginTop: 15,
+  textAlign: 'center'
 }
 
 const BUTTONSTYLE = {
-  marginHorizontal: 5
+  width: "50%",
+  backgroundColor: 'green'
 }
 
 const IMAGEVIEW: ViewStyle = {
+  marginTop: 15,
+  justifyContent: 'center',
+  alignItems: 'center'
+}
+
+const PICKBUTTONSTYLE = {
+  marginHorizontal: 5,
   marginTop: 15
 }
 
-export const ImagePickerScreen = function ImagePickerScreen() {
-  const [hasPermission, setHasPermission] = useState(null)
-  // const [image, setImage] = useState(null)
-  // const [swiperImages, setSwiperImages] = useState([])
+const VIEWSELECT: ViewStyle = {
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: 40
+}
 
-  const { swiper: { image, setImage, swiperImages, handleSwiperImages } } = React.useContext(SwiperImageContext)
+const INPUT = {
+  marginTop: 15,
+  borderColor: color.palette.lighterGrey,
+  padding: 10,
+  borderWidth: 1,
+  borderRadius: 5,
+  width: 250,
+  // marginBottom: 15
+}
+
+const PREVIEW: ViewStyle = {
+  flex: 1
+}
+
+export const ImagePickerScreen = function ImagePickerScreen({ navigation }) {
+  const [hasPermission, setHasPermission] = useState(null)
+  const [imageDescription, setImageDescription] = useState('')
+  const { swiper: { image, setImage, swiperImages, handleSwiperImages } } = useContext(PreviewRecipeContext)
 
   console.log('soy image', image)
   console.log('soy swiperImages em imagePicker', swiperImages)
+  console.log(imageDescription)
 
   useEffect(() => {
     (async () => {
@@ -60,39 +105,44 @@ export const ImagePickerScreen = function ImagePickerScreen() {
     })()
   }, [])
 
-  useEffect(() => {
-    (async () => {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 0.2,
-      })
-      if (!result.cancelled) {
-        setImage(result.uri)
-      }
-    })()
-  }, [])
+  const uploadImage = async (uri, imageName) => {
+    const response = await fetch(uri)
+    const blob = await response.blob()
 
-  function handleGoBack({ navigation }) {
-    navigation.navigate.goBack()
+    const ref = firebase.storage().ref().child(`images/${imageName} `)
+    const snapshot = await ref.put(blob)
+    return snapshot.ref.getDownloadURL().then(function(downloadURL) {
+      console.log('FIle available at', downloadURL)
+      setImage(downloadURL)
+    })
   }
 
-  // const pickImage = async () => {
-  //   const result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 0.2,
-  //   })
+  const goBack = () => {
+    navigation.navigate("Descripción")
+  }
 
-  //   console.log(result)
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.2,
+    })
 
-  //   if (!result.cancelled) {
-  //     setImage(result.uri)
-  //     setSwiperImages(result.uri)
-  //   }
-  // }
+    console.log(result.uri)
+
+    if (!result.cancelled) {
+      uploadImage(result.uri, imageDescription)
+
+        .then(() => {
+          console.log('it work')
+        })
+        .catch(error => {
+          console.log('it doesnt work')
+          console.log(error)
+        })
+    }
+  }
   if (hasPermission === null) {
     return <View />
   }
@@ -101,12 +151,24 @@ export const ImagePickerScreen = function ImagePickerScreen() {
   }
   return (
       <View style={VIEW}>
-        {/* <Button title="Seleccionar una imagen de la cámara" onPress={pickImage} /> */}
-        {image && <View style={IMAGEVIEW}><Image source={{ uri: image }} style={IMAGE} /></View>}
-        <View style={BUTTONCONTAINER}>
-          <Button style={BUTTONSTYLE} onPress={() => handleSwiperImages(image)}><Text style={TEXT}>Añadir</Text></Button>
-          <Button style={BUTTONSTYLE} onPress={() => setImage('')}><Text style={TEXT}>Cancelar</Text></Button>
-          <Button style={BUTTONSTYLE} onPress={() => handleGoBack}><Text style={TEXT}>Go back</Text></Button>
+        {image &&
+        <View style={PREVIEW}>
+          <View style={IMAGEVIEW}>
+            <Image source={{ uri: image }} style={IMAGE} />
+            <Text style={TEXTIMAGE}>{imageDescription}</Text>
+          </View>
+          <View style={BUTTONCONTAINER}>
+            <Button style={BUTTONSTYLE} onPress={() => handleSwiperImages(image)}><Text style={TEXT}>Añadir</Text></Button>
+            {/* <Button style={BUTTONSTYLE} onPress={() => deleteImage}><Text style={TEXT}>Cancelar</Text></Button> */}
+          </View>
+        </View>}
+        <View style={VIEWSELECT}>
+          <TextInput style={INPUT} onChangeText={(text) => setImageDescription(text)} placeholder={'Añade un nombre a la foto'}></TextInput>
+          <Button style={PICKBUTTONSTYLE} onPress={pickImage}>
+            {!image && swiperImages.length > 0 ? <Text style={TEXTPICKBUTTON}>Seleccionar una imagen de la cámara</Text>
+              : <Text style={TEXTPICKBUTTON}>Seleccionar otra imagen</Text> }
+          </Button>
+          <Button style={BUTTONSTYLE} onPress={() => goBack()}><Text style={TEXT}>Go back</Text></Button>
         </View>
       </View>
   )
