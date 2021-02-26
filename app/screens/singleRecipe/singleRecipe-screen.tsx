@@ -10,11 +10,11 @@ import { ShowTimeCard } from "../../components/showTime-card/showTime-card"
 const ROOT: ViewStyle = {
   flex: 1,
   // backgroundColor: color.palette.lighterGrey
-  backgroundColor: '#e6e6e6'
+  // backgroundColor: '#e6e6e6'
 }
 
 const DOTS: ViewStyle = {
-  marginBottom: '26%',
+  marginBottom: '18%',
   marginLeft: "70%"
 }
 
@@ -51,10 +51,11 @@ const VIEWSECTION: ViewStyle = {
   flex: 1,
   margin: 3,
   borderRadius: 5,
+  bottom: "10%",
 }
 
 const TIMESECTION: ViewStyle = {
-  bottom: 25,
+  bottom: "10%",
   height: "10%"
 }
 
@@ -63,27 +64,29 @@ const LINESECTION = {
   height: 5
 }
 
-export const SingleRecipeScreen = function SingleRecipeScreen() {
+export const SingleRecipeScreen = function SingleRecipeScreen({ route }) {
+  const { recipeId, images } = route.params
+
   const RECIPE = {
     title: "macarrones a la carbonara",
-    img: [
-      {
-        name: "plato final",
-        url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg"
-      },
-      {
-        name: "preparando la masa",
-        url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg"
-      },
-      {
-        name: "preparando la masa",
-        url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg"
-      },
-      {
-        name: "preparando la masa",
-        url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg"
-      },
-    ],
+    // img: [
+    //   {
+    //     name: "plato final",
+    //     url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg"
+    //   },
+    //   {
+    //     name: "preparando la masa",
+    //     url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg"
+    //   },
+    //   {
+    //     name: "preparando la masa",
+    //     url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg"
+    //   },
+    //   {
+    //     name: "preparando la masa",
+    //     url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg"
+    //   },
+    // ],
     time: 20,
     diners: 4,
     content: [
@@ -102,8 +105,10 @@ export const SingleRecipeScreen = function SingleRecipeScreen() {
     <Screen style={ROOT}>
       {/* <Header headerText="RecipeId" /> */}
       <Swiper showsButtons={false} paginationStyle={DOTS} dot={<View style={DOT} />} activeDot={<View style={ACTIVEDOT} />} height={275}>
-          {RECIPE.img.map((recipe, index) => <SwiperComponent key={index} url={recipe.url} name={recipe.name} />)}
+          {/* {RECIPE.img.map((recipe, index) => <SwiperComponent key={index} url={recipe.url} name={recipe.name} />)} */}
+          {images.map((recipe, index) => <SwiperComponent key={index} url={recipe.url} name={recipe.name} />)}
       </Swiper>
+      <Text>{RECIPE.title}</Text>
       <View style={TIMESECTION}>
         <ShowTimeCard time={RECIPE.time} diners={RECIPE.diners}/>
       </View>

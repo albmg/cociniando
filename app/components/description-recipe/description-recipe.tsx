@@ -28,8 +28,6 @@ export interface DescriptionRecipeProps {
  */
 export const DescriptionRecipe = function DescriptionRecipe(props: DescriptionRecipeProps, { navigation }) {
   const { style } = props
-  const [clicked, setClicked] = useState(false)
-  console.log(clicked)
 
   return (
     <View style={ROOT}>

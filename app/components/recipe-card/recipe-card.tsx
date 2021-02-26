@@ -46,7 +46,7 @@ export const RecipeCard = observer(function RecipeCard(props: RecipeCardProps) {
         <ImageBackground style={FULLSIZE} source={{ uri: url }}>
           <View>
             <Text style={TOPTEXT}>{title}</Text>
-            <Text style={BOTTOMTEXT}>{time} minutos </Text>
+            <Text style={BOTTOMTEXT}>{time} </Text>
           </View>
         </ImageBackground>
       </TouchableOpacity>

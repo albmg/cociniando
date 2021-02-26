@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { ViewStyle, FlatList, Text, TextStyle } from "react-native"
 import { Header, Screen } from "../../components"
 import { RecipeCard } from "../../components/recipe-card/recipe-card"
 import { typography, fontSize } from "../../theme"
-
 // import { useQuery } from 'react-query'
+import firebase from "firebase"
+import 'firebase/firestore'
 
 const ROOT: ViewStyle = {
   flex: 1,
@@ -49,40 +50,95 @@ export const RecipesScreen = function RecipesScreen({ navigation }) {
 
   // const recipes = data.data
 
+  // const [recipes, setRecipes] = useState([])
+  // const db = firebase.firestore()
+
+  // const fetchRecipes = async () => {
+  //   const response = db.collection('recipes')
+  //   const data = await response.get()
+  //   data.docs.forEach(item => {
+  //     setRecipes([...recipes, item.data()])
+  //     // console.log('soy item.data() --->', item.data())
+  //   })
+  // }
+
+  // useEffect(() => {
+  //   fetchRecipes()
+  // }, [])
+
+  // console.log('soy recipes from firebase-->', recipes)
+
   const RECIPES = [
     {
       title: "macarrones",
-      url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg",
+      images: [
+        {
+          url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg",
+          name: "macarrones"
+        },
+        {
+          url: "https://cdn6.recetasdeescandalo.com/wp-content/uploads/2020/04/Macarrones-con-atun-y-tomate.-Receta-de-pasta-rica-y-facil-para-triunfar.jpg",
+          name: "macarrones"
+        }, {
+          url: "https://live.mrf.io/statics/i/ps/www.cocinacaserayfacil.net/wp-content/uploads/2018/08/Macarrones-con-tomate-y-chorizo.jpg?width=1200&enable=upscale",
+          name: "macarrones"
+        },
+      ],
       time: 20,
       id: 1
     },
     {
       title: "ensalada",
-      url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg",
+      images: [
+        {
+          url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg",
+          name: "ensalada"
+        }
+      ],
       time: 10,
       id: 2
     },
     {
       title: "queque",
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAE_HaWhtpD9luX5ngy8z_5Pbg1GjLNXfQ9w&usqp=CAU",
+      images: [
+        {
+          url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAE_HaWhtpD9luX5ngy8z_5Pbg1GjLNXfQ9w&usqp=CAU",
+          name: "queque"
+        }
+      ],
       time: 60,
       id: 3
     },
     {
-      title: "macarrones",
-      url: "https://cdn.cookmonkeys.es/recetas/medium/macarrones-a-la-carbonara-en-thermomix-13776.jpg",
+      title: "carne",
+      images: [
+        {
+          url: "https://firebasestorage.googleapis.com/v0/b/cociniando.appspot.com/o/images%2FPrimera%20?alt=media&token=00b1d7c6-d18f-4f16-ac31-e8555c1bd7b7",
+          name: "carne"
+        }
+      ],
       time: 20,
       id: 4
     },
     {
-      title: "ensalada",
-      url: "https://cdn.cookmonkeys.es/recetas/medium/ensalada-arlesienne-8799.jpeg",
+      title: "pescado",
+      images: [
+        {
+          url: "https://firebasestorage.googleapis.com/v0/b/cociniando.appspot.com/o/images%2FSegunda%20?alt=media&token=8ce9ed93-64d9-4efb-b5a0-975dab784073",
+          name: "pescado"
+        }
+      ],
       time: 10,
       id: 5
     },
     {
-      title: "queque",
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAE_HaWhtpD9luX5ngy8z_5Pbg1GjLNXfQ9w&usqp=CAU",
+      title: "papas arrugadas",
+      images: [
+        {
+          url: "https://www.hola.com/imagenes/cocina/recetas/20200211160355/receta-papas-arrugadas-mojos/0-781-763/papas-age-m.jpg",
+          name: "papas arrugadas"
+        }
+      ],
       time: 60,
       id: 6
     }
@@ -93,10 +149,10 @@ export const RecipesScreen = function RecipesScreen({ navigation }) {
     return <RecipeCard
             style={cardStyle}
             id={item.id}
-            url={item.url}
-            title={item.title}
-            time={item.time}
-            onPress={() => navigation.navigate('SingleRecipe', { recipeId: item.id }) }>
+            url={item.images[0].url}
+            // title={item.title}
+            // time={item.time}
+            onPress={() => navigation.navigate('SingleRecipe', { recipeId: item.id, images: item.images }) }>
             </RecipeCard>
   }
 

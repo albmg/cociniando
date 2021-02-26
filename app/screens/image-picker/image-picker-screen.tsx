@@ -94,10 +94,6 @@ export const ImagePickerScreen = function ImagePickerScreen({ navigation }) {
   const [imageDescription, setImageDescription] = useState('')
   const { swiper: { image, setImage, swiperImages, handleSwiperImages } } = useContext(PreviewRecipeContext)
 
-  console.log('soy image', image)
-  console.log('soy swiperImages em imagePicker', swiperImages)
-  console.log(imageDescription)
-
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
@@ -134,7 +130,7 @@ export const ImagePickerScreen = function ImagePickerScreen({ navigation }) {
       quality: 0.2,
     })
 
-    console.log(result.uri)
+    // console.log(result.uri)
 
     if (!result.cancelled) {
       uploadImage(result.uri, imageDescription)

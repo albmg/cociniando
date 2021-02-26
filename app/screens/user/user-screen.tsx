@@ -20,16 +20,11 @@ const BUTTONSTYLE = {
 
 const BUTTONVIEW: ViewStyle = {
   flex: 1,
-  justifyContent: 'flex-end'
+  // justifyContent: 'center'
 }
 
 export const UserScreen = function UserScreen() {
-  // const { setError, setUser } = useRegister()
   const user = useCurrentUser()
-
-  console.log('soy user en userscreen', user)
-  console.log(user.email)
-  console.log(user.providerData)
 
   async function logout() {
     firebase.auth().signOut().then(() => {

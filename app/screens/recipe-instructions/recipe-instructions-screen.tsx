@@ -32,14 +32,28 @@ export const RecipeInstructionsScreen = function RecipeInstructionsScreen() {
     setMaking
   } = useContext(PreviewRecipeContext)
 
-  //  setMaking([...making, first, second, third, fourth])
+  const initialState = {
+    first: "",
+    second: "",
+    third: ""
+  }
+
+  const [state, setState] = useState(initialState)
+
+  const handleChangeText = (value, name) => {
+    setState({ ...state, [name]: value })
+    const newMaking = Object.values(state)
+    setMaking(newMaking)
+  }
 
   return (
     <View style={ROOT}>
       <ScrollView>
         <Text style={TITLETEXT}>Elaboración</Text>
           <View style={INPUTSTYLE}>
-            <TextField style={TEXTSTYLE} placeholder="Añade elaboración" multiline={true} numberOfLines={10} onChangeText={(text) => setMaking(text)}/>
+            <TextField style={TEXTSTYLE} placeholder="Añade paso nº1" multiline={true} numberOfLines={4} onChangeText={(value) => handleChangeText(value, "first")} />
+            <TextField style={TEXTSTYLE} placeholder="Añade paso nº2" multiline={true} numberOfLines={4} onChangeText={(value) => handleChangeText(value, "second")} />
+            <TextField style={TEXTSTYLE} placeholder="Añade paso nº3" multiline={true} numberOfLines={4} onChangeText={(value) => handleChangeText(value, "third")} />
           </View>
       </ScrollView>
     </View>

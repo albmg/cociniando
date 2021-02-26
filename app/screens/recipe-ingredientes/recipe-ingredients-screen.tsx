@@ -37,7 +37,7 @@ export const RecipeIngredientsScreen = function RecipeIngredientsScreen() {
       <ScrollView>
         <Text style={SCROLLTEXT}>Ingredientes</Text>
         <View >
-          {ingredients.length > 0 &&
+          {!!ingredients &&
             <ScrollView>
               <View style={SCROLLVIEW}>
                 {ingredients.map((item) => <Text style={SCROLLTEXT2} key={item.id}>{item}</Text>)}

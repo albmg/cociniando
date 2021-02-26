@@ -50,8 +50,6 @@ export const TakePhoto = observer(function TakePhoto() {
   const [imageUri, setImageUri] = useState('')
   const cameraRef = useRef<Camera>(null)
 
-  console.log(imageUri)
-
   async function takePhoto() {
     // console.tron.logImportant('not working')
     const { base64, width, height, uri } = await cameraRef.current.takePictureAsync({ quality: 1, base64: true })
@@ -59,9 +57,6 @@ export const TakePhoto = observer(function TakePhoto() {
   }
 
   async function flipCamera() {
-    // console.tron.log('hola')
-    // console.tron.logImportant('hola2')
-    console.log('hola')
     setType(type === Camera.Constants.Type.back
       ? Camera.Constants.Type.front
       : Camera.Constants.Type.back)
