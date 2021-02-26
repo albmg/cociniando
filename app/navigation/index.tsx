@@ -71,7 +71,9 @@ export const TabNavigator = (props) => (
             iconName = 'home'
           } else if (route.name === 'Crear') {
             iconName = 'add'
-          } else if (route.name === 'User' || 'Account') {
+          } else if (route.name === 'User') {
+            iconName = 'person'
+          } else if (route.name === 'Account') {
             iconName = 'person'
           }
 
