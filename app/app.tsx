@@ -1,58 +1,44 @@
-/**
- * Welcome to the main entry point of the app. In this file, we'll
- * be kicking off our app.
- *
- * Most of this file is boilerplate and you shouldn't need to modify
- * it very often. But take some time to look through and understand
- * what is going on here.
- *
- * The app navigation resides in ./app/navigation, so head over there
- * if you're interested in adding screens and navigators.
- */
 import "./i18n"
 import "./utils/ignore-warnings"
-import React, { useState, useEffect, useRef } from "react"
-import { NavigationContainerRef } from "@react-navigation/native"
+import React, { useEffect, useState } from "react"
+
 import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-context"
 import { initFonts } from "./theme/fonts" // expo
-import * as storage from "./utils/storage"
-import {
-  useBackButtonHandler,
-  RootNavigator,
-  canExit,
-  setRootNavigation,
-  useNavigationPersistence,
-} from "./navigation"
-import { RootStore, RootStoreProvider, setupRootStore } from "./models"
+
+import { TabNavigator } from "./navigation"
+
 import { ToggleStorybook } from "../storybook/toggle-storybook"
 
-// This puts screens in a native ViewController or Activity. If you want fully native
-// stack navigation, use `createNativeStackNavigator` in place of `createStackNavigator`:
-// https://github.com/kmagiera/react-native-screens#using-native-stack-navigator
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
+
 import { enableScreens } from "react-native-screens"
+
+import * as firebase from 'firebase'
+import { firebaseConfig } from './services/setup-firebase'
+import { useRegister } from './hooks/use-auth'
+import { LoadingScreen } from './screens/loading/loading-screen'
+import PreviewRecipeProvider from "./context/previewRecipeContext"
+
 enableScreens()
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
+
+const queryClient = new QueryClient()
 
 /**
  * This is the root component of our app.
  */
 function App() {
-  const navigationRef = useRef<NavigationContainerRef>()
-  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
-
-  setRootNavigation(navigationRef)
-  useBackButtonHandler(navigationRef, canExit)
-  const { initialNavigationState, onNavigationStateChange } = useNavigationPersistence(
-    storage,
-    NAVIGATION_PERSISTENCE_KEY,
-  )
+  const { setError, setUser, user } = useRegister()
+  const [loading, setLoading] = useState(true)
 
   // Kick off initial async loading actions, like loading fonts and RootStore
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       await initFonts() // expo
-      setupRootStore().then(setRootStore)
     })()
   }, [])
 
@@ -60,20 +46,35 @@ function App() {
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color. You can replace
   // with your own loading component if you wish.
-  if (!rootStore) return null
+
+  useEffect(() => {
+    firebase.apps.length === 0 && firebase.initializeApp(firebaseConfig)
+    firebase.auth().onAuthStateChanged(user => {
+      if (user != null) {
+        console.log('We are authenticated now!', user.providerData)
+        setUser({ uid: user.uid, displayName: user.displayName, email: user.email })
+        setError('')
+      }
+      setUser(user)
+      setLoading(false)
+    })
+  }, [])
+  if (loading) {
+    return <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <LoadingScreen />
+    </SafeAreaProvider>
+  }
 
   // otherwise, we're ready to render the app
   return (
     <ToggleStorybook>
-      <RootStoreProvider value={rootStore}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <RootNavigator
-            ref={navigationRef}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
+        <QueryClientProvider client={queryClient}>
+            <PreviewRecipeProvider>
+              <TabNavigator user={user}/>
+            </PreviewRecipeProvider>
+        </QueryClientProvider>
         </SafeAreaProvider>
-      </RootStoreProvider>
     </ToggleStorybook>
   )
 }
